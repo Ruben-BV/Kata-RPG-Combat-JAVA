@@ -2,7 +2,7 @@ package com.factoriaf5.kata;
 
 public class Character {
     
-    private int health = 1000;
+    private int health;
     private int level = 1;
     private boolean alive = true;
 
@@ -40,5 +40,28 @@ public class Character {
         this.alive = alive;
     }
 
-    
+    public void dealDamage(int damage, Character targCharacter) {
+        if (targCharacter.health <= damage){
+            targCharacter.health = 0;
+            targCharacter.alive = false;
+        }
+        else {
+            targCharacter.health = targCharacter.health - damage;
+        }
+    }
+
+
+    public void heal(int healPoints, Character targCharacter) {
+        if(targCharacter.alive == false) {
+            targCharacter.alive = false;
+        }
+        
+        else if((targCharacter.health + healPoints) >= 1000) {
+            targCharacter.health = 1000;
+        }
+
+        else {
+            targCharacter.health = healPoints + targCharacter.health;
+        }
+    }
 }
