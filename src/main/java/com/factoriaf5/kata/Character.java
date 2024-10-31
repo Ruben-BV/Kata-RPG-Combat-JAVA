@@ -40,7 +40,11 @@ public class Character {
         this.alive = alive;
     }
 
-    public void dealDamage(int damage, Character targCharacter) {
+    public void dealDamage(int damage, Character character, Character targCharacter) {
+        if(targCharacter == character) {
+            throw new IllegalArgumentException("A Character cannot Deal Damage to itself.");
+        }
+        
         if (targCharacter.health <= damage){
             targCharacter.health = 0;
             targCharacter.alive = false;
