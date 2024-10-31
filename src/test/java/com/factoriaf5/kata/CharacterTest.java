@@ -69,6 +69,28 @@ public class CharacterTest {
         assertEquals(0, targCharacter.getHealth());
     }
 
+    @Test
+    public void testHealthDealDamageWhenTargCharacterHealthIsSmallerThanEndDamageTargetIsMoreThanFiveLevelsAboveTheAttacker() {
+        double damage = 50;
+        Character character = new Character(500, 1, true);
+        Character targCharacter = new Character(20, 7, true);
+
+        character.dealDamage(damage, character, targCharacter);
+
+        assertEquals(0, targCharacter.getHealth());
+    }
+
+    @Test
+    public void testHealthDealDamageWhenTargCharacterHealthIsSmallerThanEndDamageCharacterIsMoreThanFiveLevelsBelowTheAttacker() {
+        double damage = 50;
+        Character character = new Character(500, 7, true);
+        Character targCharacter = new Character(20, 1, true);
+
+        character.dealDamage(damage, character, targCharacter);
+
+        assertEquals(0, targCharacter.getHealth());
+    }
+
     // @Test
     // public void testAlivetDealDamageWhenTargCharacterHealthIsSmallerThanDamage() {
     //     int damage = 50;

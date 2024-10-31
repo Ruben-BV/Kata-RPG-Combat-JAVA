@@ -57,8 +57,18 @@ public class Character {
                 }
             }
 
-            if (targCharacter.level <= character.level-5) {
+            else if (targCharacter.level <= character.level-5) {
                 damage = damage*1.5;
+                if (targCharacter.health <= damage){
+                    targCharacter.health = 0;
+                    targCharacter.alive = false;
+                }
+                else {
+                    targCharacter.health = targCharacter.health - damage;
+                }
+            }
+
+            else {
                 if (targCharacter.health <= damage){
                     targCharacter.health = 0;
                     targCharacter.alive = false;
