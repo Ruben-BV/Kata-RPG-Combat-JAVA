@@ -2,7 +2,7 @@ package com.factoriaf5.kata;
 
 public class Character {
     
-    private int health = 1000;
+    private double health = 1000;
     private int level = 1;
     private boolean alive = true;
 
@@ -10,17 +10,17 @@ public class Character {
 
     }
 
-    public Character(int health, int level, boolean alive) {
+    public Character(double health, int level, boolean alive) {
         this.health = health;
         this.level = level;
         this.alive = alive;
     }
 
-    public int getHealth() {
+    public double getHealth() {
         return health;
     }
 
-    public void setHealth(int health) {
+    public void setHealth(double health) {
         this.health = health;
     }
 
@@ -40,26 +40,49 @@ public class Character {
         this.alive = alive;
     }
 
-    public void dealDamage(int damage, Character character, Character targCharacter) {
+    public void dealDamage(double damage, Character character, Character targCharacter) {
         if(targCharacter == character) {
             throw new IllegalArgumentException("A Character cannot Deal Damage to itself.");
         }
+        else{
+            //If the target is 5 or more Levels above the attacker, Damage is reduced by 50%
+            if (targCharacter.level-5 >= character.level) {
+                damage = damage*0.5;
+                if (targCharacter.health <= damage){
+                    targCharacter.health = 0;
+                    targCharacter.alive = false;
+                }
+                else {
+                    targCharacter.health = targCharacter.health - damage;
+                }
+            }
+
+            if (targCharacter.level <= character.level-5) {
+                damage = damage*1.5;
+                if (targCharacter.health <= damage){
+                    targCharacter.health = 0;
+                    targCharacter.alive = false;
+                }
+                else {
+                    targCharacter.health = targCharacter.health - damage;
+                }
+            }
+
+            
+        }
         
-        if (targCharacter.health <= damage){
-            targCharacter.health = 0;
-            targCharacter.alive = false;
-        }
-        else {
-            targCharacter.health = targCharacter.health - damage;
-        }
     }
 
-    public void heal(int healPoints, Character targCharacter) {
-        if(targCharacter.alive == false) {
-            targCharacter.alive = false;
+    public void heal(double healPoints, Character character, Character targCharacter) {
+        if (targCharacter != character) {
+            throw new IllegalArgumentException("A Character can only heal itself.");
         }
         
-        else if((targCharacter.health + healPoints) >= 1000) {
+        if (!targCharacter.alive) {
+            throw new IllegalStateException("Cannot heal a dead character.");
+        }
+        
+        if((targCharacter.health + healPoints) >= 1000) {
             targCharacter.health = 1000;
         }
 

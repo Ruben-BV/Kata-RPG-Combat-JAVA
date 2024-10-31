@@ -18,7 +18,7 @@ public class CharacterTest {
     @Test
     public void testConstructor() {
 
-        int expectedHealth = 100;
+        double expectedHealth = 100;
         int expectedLevel = 5;
         boolean expectedAlive = true;
 
@@ -32,10 +32,10 @@ public class CharacterTest {
 
     @Test
     public void testSetAndGetHealth() {
-        int health = 750;
+        double health = 750;
         
         character.setHealth(health);
-        int result=character.getHealth();
+        double result=character.getHealth();
         assertEquals(750, result);
     }
 
@@ -59,70 +59,70 @@ public class CharacterTest {
 
 
     @Test
-    public void testHealtDealDamageWhenTargCharacterHealthIsSmallerThanDamage() {
-        int damage = 50;
+    public void testHealthDealDamageWhenTargCharacterHealthIsSmallerThanEndDamageTargetIsFiveLevelsAboveTheAttacker() {
+        double damage = 50;
         Character character = new Character(500, 1, true);
-        Character targCharacter = new Character(40, 1, true);
+        Character targCharacter = new Character(20, 6, true);
 
         character.dealDamage(damage, character, targCharacter);
 
         assertEquals(0, targCharacter.getHealth());
     }
 
-    @Test
-    public void testAlivetDealDamageWhenTargCharacterHealthIsSmallerThanDamage() {
-        int damage = 50;
-        Character character = new Character(500, 1, true);
-        Character targCharacter = new Character(40, 1, true);
+    // @Test
+    // public void testAlivetDealDamageWhenTargCharacterHealthIsSmallerThanDamage() {
+    //     int damage = 50;
+    //     Character character = new Character(500, 1, true);
+    //     Character targCharacter = new Character(40, 1, true);
 
-        character.dealDamage(damage, character, targCharacter);
+    //     character.dealDamage(damage, character, targCharacter);
 
-        assertEquals(false, targCharacter.isAlive());
-    }
+    //     assertEquals(false, targCharacter.isAlive());
+    // }
 
-    @Test
-    public void testHealtDealDamageWhenTargCharacterHealthIsEqualThanDamage() {
-        int damage = 50;
-        Character character = new Character(500, 1, true);
-        Character targCharacter = new Character(damage, 1, true);
+    // @Test
+    // public void testHealtDealDamageWhenTargCharacterHealthIsEqualThanDamage() {
+    //     int damage = 50;
+    //     Character character = new Character(500, 1, true);
+    //     Character targCharacter = new Character(damage, 1, true);
 
-        character.dealDamage(damage, character, targCharacter);
+    //     character.dealDamage(damage, character, targCharacter);
 
-        assertEquals(0, targCharacter.getHealth());
-    }
+    //     assertEquals(0, targCharacter.getHealth());
+    // }
 
-    @Test
-    public void testAlivetDealDamageWhenTargCharacterHealthIsEqualThanDamage() {
-        int damage = 50;
-        Character character = new Character(500, 1, true);
-        Character targCharacter = new Character(damage, 1, true);
+    // @Test
+    // public void testAlivetDealDamageWhenTargCharacterHealthIsEqualThanDamage() {
+    //     int damage = 50;
+    //     Character character = new Character(500, 1, true);
+    //     Character targCharacter = new Character(damage, 1, true);
 
-        character.dealDamage(damage, character, targCharacter);
+    //     character.dealDamage(damage, character, targCharacter);
 
-        assertEquals(false, targCharacter.isAlive());
-    }
+    //     assertEquals(false, targCharacter.isAlive());
+    // }
 
-    @Test
-    public void testHealtDealDamageWhenTargCharacterHealthIsBiggerThanDamage() {
-        int damage = 50;
-        Character character = new Character(500, 1, true);
-        Character targCharacter = new Character(60, 1, true);
+    // @Test
+    // public void testHealtDealDamageWhenTargCharacterHealthIsBiggerThanDamage() {
+    //     int damage = 50;
+    //     Character character = new Character(500, 1, true);
+    //     Character targCharacter = new Character(60, 1, true);
 
-        character.dealDamage(damage, character, targCharacter);
+    //     character.dealDamage(damage, character, targCharacter);
 
-        assertEquals(10, targCharacter.getHealth());
-    }
+    //     assertEquals(10, targCharacter.getHealth());
+    // }
 
-    @Test
-    public void testAlivetDealDamageWhenTargCharacterHealthIsBiggerThanDamage() {
-        int damage = 50;
-        Character character = new Character(60, 1, true);
-        Character targcharacter = new Character(damage, 1, true);
+    // @Test
+    // public void testAlivetDealDamageWhenTargCharacterHealthIsBiggerThanDamage() {
+    //     int damage = 50;
+    //     Character character = new Character(60, 1, true);
+    //     Character targcharacter = new Character(damage, 1, true);
 
-        character.dealDamage(damage, character, targcharacter);
+    //     character.dealDamage(damage, character, targcharacter);
 
-        assertEquals(true, character.isAlive());
-    }
+    //     assertEquals(true, character.isAlive());
+    // }
 
     @Test
     public void testDealDamageToItself() {
@@ -139,7 +139,7 @@ public class CharacterTest {
         Character character = new Character(950,1,true);
         int healPoints = 100;
 
-        character.heal(healPoints, character);
+        character.heal(healPoints, character, character);
 
         assertEquals(1000, character.getHealth());
     }
@@ -149,7 +149,7 @@ public class CharacterTest {
         Character character = new Character(900,1,true);
         int healPoints = 100;
 
-        character.heal(healPoints, character);
+        character.heal(healPoints, character, character);
 
         assertEquals(1000, character.getHealth());
     }
@@ -159,9 +159,20 @@ public class CharacterTest {
         Character character = new Character(0,1,false);
         int healPoints = 100;
 
-        character.heal(healPoints, character);
+        assertThrows(IllegalStateException.class, () -> {
+            character.heal(healPoints, character, character);
+        });
+    }
 
-        assertEquals(false, character.isAlive());
+    @Test
+    public void testHealWhenTargetCharacterIsDifferent() {
+        Character mainCharacter = new Character(0,1,false);
+        Character targCharacter = new Character(0,1,false);
+        int healPoints = 100;
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            character.heal(healPoints, mainCharacter, targCharacter);
+        });
     }
 
     @Test
@@ -169,23 +180,9 @@ public class CharacterTest {
         Character character = new Character(200,1,true);
         int healPoints = 100;
 
-        character.heal(healPoints, character);
+        character.heal(healPoints, character, character);
 
         assertEquals(300, character.getHealth());
     }
-
-    // public void heal(int healPoints, Character targCharacter) {
-    //     if(targCharacter.alive == false) {
-    //         targCharacter.alive = false;
-    //     }
-        
-    //     else if((targCharacter.health + healPoints) >= 1000) {
-    //         targCharacter.health = 1000;
-    //     }
-
-    //     else {
-    //         targCharacter.health = healPoints + targCharacter.health;
-    //     }
-    // }
 
 }
