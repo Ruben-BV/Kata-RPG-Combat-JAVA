@@ -45,7 +45,7 @@ public class Character {
             throw new IllegalArgumentException("A Character cannot Deal Damage to itself.");
         }
         else{
-            //If the target is 5 or more Levels above the attacker, Damage is reduced by 50%
+
             if (targCharacter.level-5 >= character.level) {
                 damage = damage*0.5;
                 if (targCharacter.health <= damage){

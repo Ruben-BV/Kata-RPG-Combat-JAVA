@@ -58,12 +58,30 @@ public class CharacterTest {
     }
 
 
+
+
+
+    // -------- dealDamage --------
+
+    @Test
+    public void testDealDamageToItself() {
+        int damage = 50;
+        Character character = new Character(500, 1, true);
+    
+        assertThrows(IllegalArgumentException.class, () -> {
+            character.dealDamage(damage, character, character);
+        });
+    }
+
+        
+        // dealDamage: If the target is 5 or more Levels above the attacker, Damage is reduced by 50%
+
     @Test
     public void testHealthDealDamageWhenTargCharacterHealthIsSmallerThanEndDamageTargetIsFiveLevelsAboveTheAttacker() {
         double damage = 50;
         Character character = new Character(500, 1, true);
         Character targCharacter = new Character(20, 6, true);
-
+        
         character.dealDamage(damage, character, targCharacter);
 
         assertEquals(0, targCharacter.getHealth());
@@ -80,8 +98,23 @@ public class CharacterTest {
         assertEquals(0, targCharacter.getHealth());
     }
 
+    
     @Test
-    public void testHealthDealDamageWhenTargCharacterHealthIsSmallerThanEndDamageCharacterIsMoreThanFiveLevelsBelowTheAttacker() {
+    public void testAlivetDealDamageWhenTargCharacterHealthIsBiggerThanEndDamageTargetIsMoreThanFiveLevelsAboveTheAttacker() {
+        double damage = 50;
+        Character character = new Character(500, 1, true);
+        Character targCharacter = new Character(500, 7, true);
+        
+        character.dealDamage(damage, character, targCharacter);
+        
+        assertEquals(475, targCharacter.getHealth());
+    }
+    
+    
+    // dealDamage: If the target is 5 or more levels below the attacker, Damage is increased by 50%
+    
+    @Test
+    public void testHealthDealDamageWhenTargCharacterHealthIsSmallerThanEndDamageTargetIsMoreThanFiveLevelsBelowTheAttacker() {
         double damage = 50;
         Character character = new Character(500, 7, true);
         Character targCharacter = new Character(20, 1, true);
@@ -91,6 +124,20 @@ public class CharacterTest {
         assertEquals(0, targCharacter.getHealth());
     }
 
+    @Test
+    public void testAlivetDealDamageWhenTargCharacterHealthIsBiggerThanEndDamageTargetIsMoreThanFiveLevelsBelowTheAttacker() {
+        double damage = 50;
+        Character character = new Character(500, 7, true);
+        Character targCharacter = new Character(500, 1, true);
+
+        character.dealDamage(damage, character, targCharacter);
+
+        assertEquals(425, targCharacter.getHealth());
+    }
+    
+
+
+        // dealDamage: Rest
 
     @Test
     public void testAlivetDealDamageWhenTargCharacterHealthIsSmallerThanDamage() {
@@ -147,15 +194,11 @@ public class CharacterTest {
         assertEquals(true, character.isAlive());
     }
 
-    @Test
-    public void testDealDamageToItself() {
-        int damage = 50;
-        Character character = new Character(500, 1, true);
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            character.dealDamage(damage, character, character);
-        });
-    }
+
+
+
+    // -------- heal --------
 
     @Test
     public void testHealWhenCharacterHealthPlusHealPointsIsBiggerThanThousand() {
