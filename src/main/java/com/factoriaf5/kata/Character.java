@@ -5,8 +5,8 @@ public class Character {
     private double health = 1000;
     private int level = 1;
     private boolean alive = true;
-    private String fighterType = "rangedFighter";
-    private double attackMaxRange = fighterType.equals("meleeFighter") ? 2 : fighterType.equals("rangedFighter") ? 20: null;
+    private String fighterType;
+    private double attackMaxRange;
     
 
     public Character() {
@@ -18,6 +18,7 @@ public class Character {
         this.level = level;
         this.alive = alive;
         this.fighterType = fighterType;
+        this.attackMaxRange = fighterType.equals("meleeFighter") ? 2 : fighterType.equals("rangedFighter") ? 20: 1000000;
     }
 
     public double getHealth() {
@@ -51,6 +52,10 @@ public class Character {
     public void setFighterType(String fighterType) {
         this.fighterType = fighterType;
     }
+
+    public double getAttackMaxRange() {
+        return attackMaxRange;
+    }
     
 
     public void dealDamage(double damage, Character character, Character targCharacter, double distance) {
@@ -60,6 +65,7 @@ public class Character {
             if(targCharacter == character) {
                 throw new IllegalArgumentException("A Character cannot Deal Damage to itself.");
             }
+
             else{
     
                 if (targCharacter.level-5 >= character.level) {
