@@ -71,31 +71,33 @@ public class CharacterTest {
 
 
 
-//     // -------- dealDamage --------
+    // -------- dealDamage --------
 
-//     @Test
-//     public void testDealDamageToItself() {
-//         int damage = 50;
-//         Character character = new Character(500, 1, true);
+    @Test
+    public void testDealDamageToItself() {
+        int damage = 50;
+        double distance = 2;
+        Character character = new Character(500, 1, true, "rangedFighter");
     
-//         assertThrows(IllegalArgumentException.class, () -> {
-//             character.dealDamage(damage, character, character);
-//         });
-//     }
+        assertThrows(IllegalArgumentException.class, () -> {
+            character.dealDamage(damage, character, character, distance);
+        });
+    }
 
         
-//         // dealDamage: If the target is 5 or more Levels above the attacker, Damage is reduced by 50%
+        // dealDamage: If the target is 5 or more Levels above the attacker, Damage is reduced by 50%
 
-//     @Test
-//     public void testHealthDealDamageWhenTargCharacterHealthIsSmallerThanEndDamageTargetIsFiveLevelsAboveTheAttacker() {
-//         double damage = 50;
-//         Character character = new Character(500, 1, true);
-//         Character targCharacter = new Character(20, 6, true);
+    @Test
+    public void testHealthDealDamageWhenTargCharacterHealthIsSmallerThanEndDamageTargetIsFiveLevelsAboveTheAttacker() {
+        double damage = 50;
+        double distance = 2;
+        Character character = new Character(500, 1, true, "rangedFighter");
+        Character targCharacter = new Character(20, 6, true, "rangedFighter");
         
-//         character.dealDamage(damage, character, targCharacter);
+        character.dealDamage(damage, character, targCharacter, distance);
 
-//         assertEquals(0, targCharacter.getHealth());
-//     }
+        assertEquals(0, targCharacter.getHealth());
+    }
 
 //     @Test
 //     public void testHealthDealDamageWhenTargCharacterHealthIsSmallerThanEndDamageTargetIsMoreThanFiveLevelsAboveTheAttacker() {
@@ -208,57 +210,57 @@ public class CharacterTest {
 
 
 
-//     // -------- heal --------
+    // -------- heal --------
 
-//     @Test
-//     public void testHealWhenCharacterHealthPlusHealPointsIsBiggerThanThousand() {
-//         Character character = new Character(950,1,true);
-//         int healPoints = 100;
+    @Test
+    public void testHealWhenCharacterHealthPlusHealPointsIsBiggerThanThousand() {
+        Character character = new Character(950,1,true, "rangedFighter");
+        int healPoints = 100;
 
-//         character.heal(healPoints, character, character);
+        character.heal(healPoints, character, character);
 
-//         assertEquals(1000, character.getHealth());
-//     }
+        assertEquals(1000, character.getHealth());
+    }
 
-//     @Test
-//     public void testHealWhenCharacterHealthPlusHealPointsIsEqualThanThousand() {
-//         Character character = new Character(900,1,true);
-//         int healPoints = 100;
+    @Test
+    public void testHealWhenCharacterHealthPlusHealPointsIsEqualThanThousand() {
+        Character character = new Character(900,1,true, "rangedFighter");
+        int healPoints = 100;
 
-//         character.heal(healPoints, character, character);
+        character.heal(healPoints, character, character);
 
-//         assertEquals(1000, character.getHealth());
-//     }
+        assertEquals(1000, character.getHealth());
+    }
 
-//     @Test
-//     public void testHealWhenCharacterAliveIsFalse() {
-//         Character character = new Character(0,1,false);
-//         int healPoints = 100;
+    @Test
+    public void testHealWhenCharacterAliveIsFalse() {
+        Character character = new Character(0,1,false,"rangedFighter");
+        int healPoints = 100;
 
-//         assertThrows(IllegalStateException.class, () -> {
-//             character.heal(healPoints, character, character);
-//         });
-//     }
+        assertThrows(IllegalStateException.class, () -> {
+            character.heal(healPoints, character, character);
+        });
+    }
 
-//     @Test
-//     public void testHealWhenTargetCharacterIsDifferent() {
-//         Character mainCharacter = new Character(0,1,false);
-//         Character targCharacter = new Character(0,1,false);
-//         int healPoints = 100;
+    @Test
+    public void testHealWhenTargetCharacterIsDifferent() {
+        Character mainCharacter = new Character(0,1,false,"rangedFighter");
+        Character targCharacter = new Character(0,1,false,"rangedFighter");
+        int healPoints = 100;
 
-//         assertThrows(IllegalArgumentException.class, () -> {
-//             character.heal(healPoints, mainCharacter, targCharacter);
-//         });
-//     }
+        assertThrows(IllegalArgumentException.class, () -> {
+            character.heal(healPoints, mainCharacter, targCharacter);
+        });
+    }
 
-//     @Test
-//     public void testHeal() {
-//         Character character = new Character(200,1,true);
-//         int healPoints = 100;
+    @Test
+    public void testHeal() {
+        Character character = new Character(200,1,true, "rangedFighter");
+        int healPoints = 100;
 
-//         character.heal(healPoints, character, character);
+        character.heal(healPoints, character, character);
 
-//         assertEquals(300, character.getHealth());
-//     }
+        assertEquals(300, character.getHealth());
+    }
 
 }
